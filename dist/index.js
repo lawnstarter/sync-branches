@@ -1990,6 +1990,9 @@ async function run() {
     const pullRequestBody = core.getInput("PULL_REQUEST_BODY");
     const pullRequestIsDraft = core.getInput("PULL_REQUEST_IS_DRAFT").toLowerCase() === "true";
 
+    console.log(`using token ${githubToken} to retrieve repository`);
+    console.log(`${process.env.GITHUB_REPOSITORY}`);
+
     console.log(`Making a pull request to ${toBranch} from ${fromBranch}.`);
 
     const octokit = new github.GitHub(githubToken);
