@@ -1990,11 +1990,18 @@ async function run() {
     const pullRequestBody = core.getInput("PULL_REQUEST_BODY");
     const pullRequestIsDraft = core.getInput("PULL_REQUEST_IS_DRAFT").toLowerCase() === "true";
 
+    console.log(`using token ${githubToken} to retrieve repository`);
+    console.log(`${process.env.GITHUB_REPOSITORY}`);
+
     console.log(`Making a pull request to ${toBranch} from ${fromBranch}.`);
 
     const octokit = new github.GitHub(githubToken);
 
-    const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
+    const [owner, repo] = process.env.GITHUB_REPOSITORY.replace('git@github.com:', '').split("/");
+
+
+    console.log(`${owner}`);
+    console.log(`${repo}`);
     const { data: currentPulls } = await octokit.pulls.list({ owner, repo });
 
     const currentPull = currentPulls.find(pull => {
